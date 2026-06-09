@@ -1,0 +1,8 @@
+- https://medium.com/@juanfraleonhardt/music-genre-classification-a-machine-learning-exercise-9c83108fd2bb
+- https://github.com/aggittle/Genre-Classification-with-Spotify-API/blob/master/Spotify%20Classification.ipynb
+
+- Music Genre Classification - https://www.kaggle.com/code/jvedarutvija/music-genre-classification
+- Bhaveen/Musical-Instrument-Classification - https://huggingface.co/Bhaveen/Musical-Instrument-Classification
+- LaurenGurgiolo/Music_by_Emotion - https://huggingface.co/LaurenGurgiolo/Music_by_Emotion
+- sugarblock/music_genres_classification-finetuned-gtzan - https://huggingface.co/sugarblock/music_genres_classification-finetuned-gtzan
+- K-Means Spotify Song Clustering - https://www.kaggle.com/code/sivarazadi/k-means-spotify-song-clustering
