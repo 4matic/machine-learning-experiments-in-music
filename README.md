@@ -1,4 +1,4 @@
-# Machine learning in music
+# Machine learning experiments in music
 
 ![Python](https://img.shields.io/badge/python-3.12-blue)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.20-orange)
@@ -62,9 +62,36 @@ The feature correlation heatmap that drove feature selection (key and mode corre
 
 ## Part 2: pretrained models on real songs
 
-The three `project-music-by-*` notebooks skip training entirely and ask what existing audio transformers hear in actual MP3s. Full songs get chopped into windows (30 s for genre, 3 s for instruments), every window is classified, and the softmax probabilities are averaged into a per-track profile; per-window top picks become a timeline showing how the model's call shifts between a song's sections.
+The three `project-music-by-*` notebooks skip training and ask what off-the-shelf audio transformers hear in six real MP3s, Slipknot and Eminem next to The Cardigans. Full songs get chopped into windows (30 s for genre, 3 s for instruments), every window is classified, and the softmax probabilities average into a per-track profile. The per-window top picks become a timeline of how the model's call moves through a song.
 
-One honest finding worth repeating from the instrument notebook: the model was trained on isolated single-instrument clips, and a full band mix is a different beast. It heard hi-hats first in nearly everything. Results from models used outside their training distribution are sketches, not ground truth.
+What the three models heard, top pick and mean probability per track:
+
+| Track | Emotion | Genre | Instrument |
+|---|---|---|---|
+| Andromida - Real | Bad (46%) | pop (64%) | hi-hats (18%) |
+| Eminem - Lose Yourself | Sleepy (39%) | hiphop (70%) | trumpet (17%) |
+| Linkin Park - In The End | Disgust (41%) | hiphop (43%) | acoustic guitar (18%) |
+| Nero - Blame You | Sad (55%) | pop (97%) | hi-hats (18%) |
+| Slipknot - Duality | Bad (42%) | metal (86%) | hi-hats (21%) |
+| The Cardigans - My Favorite Game | Bad (80%) | pop (37%) | violin (18%) |
+
+The genre model earns its keep. Duality is metal at 86%, top pick in 88% of its windows. Lose Yourself is hiphop, and In The End splits between hiphop, pop and rock, a fair reading of a rap-rock song. Then there is Nero: 97% pop, the most confident call on the whole table, for a drum and bass track. GTZAN has ten genres and none of them is dubstep; a model forced to choose will choose with conviction. Closed vocabularies fail silently.
+
+The timelines are better than the headline numbers, because they line up with song structure:
+
+<p align="center">
+  <img src="docs/img/genre-timelines.png" width="85%" alt="Per-window genre predictions over time for all six tracks">
+</p>
+
+The model hears Lose Yourself's quiet piano intro as classical, drifts through blues, then locks onto hiphop for the remaining five minutes. In The End starts as hiphop through the rapped verses and climbs to rock and metal as the guitars take over. Duality is a flat metal line until the quiet outro, which reads as classical. None of that was prompted; it falls out of classifying 30-second windows independently.
+
+The other two models fare worse, in instructive ways. The emotion model calls three of six tracks "Bad" and thinks Lose Yourself is "Sleepy". The instrument model never gets above 21% confidence and hears hi-hats first in half of everything:
+
+<p align="center">
+  <img src="docs/img/instrument-timelines.png" width="85%" alt="Per-window instrument predictions over time for all six tracks">
+</p>
+
+That model was trained on isolated single-instrument clips, and a full band mix is a different beast. The trumpet it hears in Lose Yourself and the violin in My Favorite Game are confusions a human would not make. The lesson the section keeps teaching: a model used outside its training distribution gives you a sketch, not ground truth, and the confidence number tells you which one you are holding.
 
 ## Part 3: predicting genre
 
@@ -125,11 +152,11 @@ A GPU runtime (Runtime > Change runtime type) cuts the genre-nn training from ab
 
 | Date | What happened |
 |---|---|
-| Jun 8 | First clustering of the 114k dataset; cluster profiles and per-cluster top tracks ([`f3be569`](https://github.com/4matic/machine-learning-in-music/commit/f3be569)...[`25100c7`](https://github.com/4matic/machine-learning-in-music/commit/25100c7)) |
-| Jun 9 | Collected reference material ([links.txt](links.txt)); scaled clustering to the 1.2M dataset ([`3d57b81`](https://github.com/4matic/machine-learning-in-music/commit/3d57b81)) |
-| Jun 10 | Added the three pretrained-model inference notebooks ([`8ef2974`](https://github.com/4matic/machine-learning-in-music/commit/8ef2974)) |
-| Jun 11 | Documented the clustering notebook; moved inference to six shared test tracks; built the supervised genre notebook ([`7d867c4`](https://github.com/4matic/machine-learning-in-music/commit/7d867c4)...[`974061a`](https://github.com/4matic/machine-learning-in-music/commit/974061a)) |
-| Jun 12 | Tuning rounds, artist features, analysis graphs and the final report ([`4b73fe4`](https://github.com/4matic/machine-learning-in-music/commit/4b73fe4), [`fdd70c1`](https://github.com/4matic/machine-learning-in-music/commit/fdd70c1)) |
+| Jun 8 | First clustering of the 114k dataset; cluster profiles and per-cluster top tracks ([`f3be569`](https://github.com/4matic/machine-learning-experiments-in-music/commit/f3be569)...[`25100c7`](https://github.com/4matic/machine-learning-experiments-in-music/commit/25100c7)) |
+| Jun 9 | Collected reference material ([links.txt](links.txt)); scaled clustering to the 1.2M dataset ([`3d57b81`](https://github.com/4matic/machine-learning-experiments-in-music/commit/3d57b81)) |
+| Jun 10 | Added the three pretrained-model inference notebooks ([`8ef2974`](https://github.com/4matic/machine-learning-experiments-in-music/commit/8ef2974)) |
+| Jun 11 | Documented the clustering notebook; moved inference to six shared test tracks; built the supervised genre notebook ([`7d867c4`](https://github.com/4matic/machine-learning-experiments-in-music/commit/7d867c4)...[`974061a`](https://github.com/4matic/machine-learning-experiments-in-music/commit/974061a)) |
+| Jun 12 | Tuning rounds, artist features, analysis graphs and the final report ([`4b73fe4`](https://github.com/4matic/machine-learning-experiments-in-music/commit/4b73fe4), [`fdd70c1`](https://github.com/4matic/machine-learning-experiments-in-music/commit/fdd70c1)) |
 
 ## References
 
