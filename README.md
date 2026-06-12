@@ -17,6 +17,17 @@ flowchart LR
     E --> E1([emotion / genre / instrument<br/>profiles and timelines])
 ```
 
+## Contents
+
+- [Notebooks](#notebooks)
+- [Part 1: clustering without labels](#part-1-clustering-without-labels)
+- [Part 2: pretrained models on real songs](#part-2-pretrained-models-on-real-songs)
+- [Part 3: predicting genre](#part-3-predicting-genre)
+- [Data](#data)
+- [Running the notebooks](#running-the-notebooks)
+- [Project log](#project-log)
+- [References](#references)
+
 ## Notebooks
 
 | Notebook | Question | Approach | Result |
