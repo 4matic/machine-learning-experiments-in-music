@@ -104,6 +104,10 @@ The other two models fare worse, in instructive ways. The emotion model calls th
 
 That model was trained on isolated single-instrument clips, and a full band mix is a different beast. The trumpet it hears in Lose Yourself and the violin in My Favorite Game are confusions a human would not make. The lesson the section keeps teaching: a model used outside its training distribution gives you a sketch, not ground truth, and the confidence number tells you which one you are holding.
 
+A fair question after that table: why are these models so shaky? Because they are community uploads, not products. All three are small fine-tunes published by individual accounts, with no paper, no evaluation report, and in one case not even label names (the emotion model ships with LABEL_0 through LABEL_10; the notebook restores the real classes from its training dataset). None of that makes them useless. Off-the-shelf checkpoints are the fastest way to probe an idea, and that is exactly what they did here.
+
+For results you would defend, fine-tune. The [Hugging Face audio course](https://huggingface.co/learn/audio-course/chapter4/fine-tuning) walks through taking DistilHuBERT to 83% on GTZAN in ten epochs, about an hour on the free Colab T4, with 899 training clips. An afternoon of fine-tuning on labels you trust beats any amount of shopping for someone else's checkpoint. Training on your own catalog is better still: the model learns your idea of an emotion or a genre instead of a stranger's.
+
 ## Part 3: predicting genre
 
 [project-genre-nn.ipynb](project-genre-nn.ipynb) is the deepest notebook, built on the workflow from [Leonhardt's Medium article](https://medium.com/@juanfraleonhardt/music-genre-classification-a-machine-learning-exercise-9c83108fd2bb): clean the data, drop country-name genres, merge 103 raw genres into 56 groups that sound alike (Ward clustering on genre centroids), then train. The article's best results were 73.7% top-3 for XGBoost and 69.5% for its neural network.
@@ -182,6 +186,7 @@ Pretrained models
 - [LaurenGurgiolo/Music_by_Emotion](https://huggingface.co/LaurenGurgiolo/Music_by_Emotion) - AST, 11 emotions
 - [sugarblock/music_genres_classification-finetuned-gtzan](https://huggingface.co/sugarblock/music_genres_classification-finetuned-gtzan) - wav2vec2, 10 GTZAN genres
 - [Bhaveen/Musical-Instrument-Classification](https://huggingface.co/Bhaveen/Musical-Instrument-Classification) - wav2vec2, 9 instruments
+- Hugging Face audio course, [fine-tuning for music classification](https://huggingface.co/learn/audio-course/chapter4/fine-tuning) - the recipe for doing better than these checkpoints
 
 Papers behind the modeling choices
 
